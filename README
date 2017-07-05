@@ -1,0 +1,2 @@
+# UAP Cross-Target libray
+This project shows the workarounds that need to be done to provide a proper resources files layout when targeting UWP.

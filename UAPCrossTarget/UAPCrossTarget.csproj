@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>uap10.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0'">
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <NugetTargetMoniker>UAP,Version=v10.0</NugetTargetMoniker>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.14393.0</TargetPlatformMinVersion>
+    <TargetFrameworkIdentifier>.NETCore</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
+    <DefineConstants>$(DefineConstants);NETFX_CORE</DefineConstants>
+    <LanguageTargets>$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets</LanguageTargets>
+
+    <!-- Ensures the .xr.xml files are generated in a proper layout folder -->
+    <GenerateLibraryLayout>true</GenerateLibraryLayout>
+  </PropertyGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform " Version="5.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml;" />
+  </ItemGroup>
+
+  <Target Name="FixUWPLayout" AfterTargets="Build" BeforeTargets="GenerateNuspec;BuiltProjectOutputGroup">
+    <ItemGroup>
+      <Content Include="Bin\$(Configuration)\$(TargetFramework)\$(AssemblyName)\**\*.*">
+        <Pack>true</Pack>
+        <PackagePath>lib\$(TargetFramework)\$(AssemblyName)</PackagePath>
+      </Content>
+    </ItemGroup>
+    <Message Importance="high" Text="Content: @(Content)" />
+  </Target>
+
+</Project>
