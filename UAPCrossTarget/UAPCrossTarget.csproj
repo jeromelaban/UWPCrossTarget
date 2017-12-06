@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>uap10.0</TargetFramework>
+    <TargetFrameworks>uap10.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0'">
@@ -27,14 +27,15 @@
     <Page Include="**\*.xaml" Exclude="bin\**\*.xaml;obj\**\*.xaml;" />
   </ItemGroup>
 
-  <Target Name="FixUWPLayout" AfterTargets="Build" BeforeTargets="GenerateNuspec;BuiltProjectOutputGroup">
+  <Target Name="FixUWPLayout" AfterTargets="Build">
+    <Message Importance="high" Text="Adding files from: $(MSBuildProjectDirectory)\Bin\$(Configuration)\uap10.0\$(AssemblyName)\**\*.*" />
     <ItemGroup>
-      <Content Include="Bin\$(Configuration)\$(TargetFramework)\$(AssemblyName)\**\*.*">
+      <Content Include="$(MSBuildProjectDirectory)\Bin\$(Configuration)\uap10.0\$(AssemblyName)\**\*.*">
         <Pack>true</Pack>
-        <PackagePath>lib\$(TargetFramework)\$(AssemblyName)</PackagePath>
+				<PackagePath>lib\uap10.0\$(AssemblyName)</PackagePath>
       </Content>
     </ItemGroup>
-    <Message Importance="high" Text="Content: @(Content)" />
+    <Message Importance="high" Text="BuiltProjectOutputGroupOutput: @(_AdditionalFiles)" />
   </Target>
 
 </Project>
