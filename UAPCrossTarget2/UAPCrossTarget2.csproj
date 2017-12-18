@@ -25,6 +25,10 @@
 	<ItemGroup>
 		<Page Include="**\*.xaml" Exclude="**\bin\**\*.xaml;**\obj\**\*.xaml" SubType="Designer" Generator="MSBuild:Compile" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\UAPCrossTarget\UAPCrossTarget.csproj" />
+	</ItemGroup>
 	
 	<Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
